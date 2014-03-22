@@ -1,32 +1,32 @@
-package se.itello.example.myapi;
+package se.itello.example.datafileregistration;
 
 import java.nio.file.Path;
 import se.itello.example.payments.PaymentReceiver;
 
 
-public class FileDispatcher {
+public class DataFileRegistrator {
     private static final String INBETALNINGSTJANSTEN = "_inbetalningstjansten.txt";
     private static final String BETALNINGSSERVICE = "_betalningsservice.txt";
     
     private final PaymentReceiver paymentReceiver;
     //...
     //...
-    private FileHandler fileHandler;
+    private Handler handler;
 
                                                         //...
-    public FileDispatcher(PaymentReceiver paymentReceiver) {
+    public DataFileRegistrator(PaymentReceiver paymentReceiver) {
         this.paymentReceiver = paymentReceiver;
     }
-    
-    public void dispatchFile(Path path) {
+     
+    public void register(Path path) {
         String ext = getExtension(path);
         switch(ext) {
             case INBETALNINGSTJANSTEN:
                 //fileHandler = new InbetalingstjanstenFileHandler(path);
                 break;
             case BETALNINGSSERVICE:
-                fileHandler = new BetalningsserviceFileHandler(paymentReceiver);
-                fileHandler.sendDataToReciever(path);
+                handler = new BetalningsserviceHandler(paymentReceiver);
+                handler.processAndRegisterFileData(path);
                 
                 break;
         }

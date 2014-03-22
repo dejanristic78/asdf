@@ -1,4 +1,4 @@
-package se.itello.example.myapi;
+package se.itello.example.datafileregistration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
