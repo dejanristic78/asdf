@@ -2,6 +2,7 @@ package se.itello.example.datafileregistration;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 
 public class BetalningsserviceHandler extends PaymentHandler{
@@ -28,33 +29,30 @@ public class BetalningsserviceHandler extends PaymentHandler{
     }
     
     @Override
-    protected void parseLines() {
+    protected void parseLines(List<String> lines) {
         for(String line : lines) {
-            String postType = postTypeSection.getData(line);
+            String postType = postTypeSection.getDataFrom(line);
             
             switch(postType) {
                 case PAYMENT_POST:
-                    String amountStr = amountSection.getData(line);
+                    String amountStr = amountSection.getDataFrom(line);
                     BigDecimal amount = getBigDecimalFromString(amountStr);
-                    String reference = referenceSection.getData(line);
+                    String reference = referenceSection.getDataFrom(line);
                     payments.add( new PaymentData(amount, reference) );
                     break;
 
                 case OPENING_POST:
-                    accountNumber = accountNumberSection.getData(line);
-                    String dateStr = paymentDateSection.getData(line);
+                    accountNumber = accountNumberSection.getDataFrom(line);
+                    String dateStr = paymentDateSection.getDataFrom(line);
                     paymentDate = getDateFromString(dateStr);
-                    currency = currencySection.getData(line);
+                    currency = currencySection.getDataFrom(line);
                     break;
             }
         }
     }
-    //OBS! Snygga till!
     private BigDecimal getBigDecimalFromString(String s) {
         String formattedValue = s.replace(" ", "").replace(",", ".");
-        //Lägg till sanity check
-        BigDecimal b = new BigDecimal(formattedValue);
-        return b;
+        return new BigDecimal(formattedValue);
     }
     private Date getDateFromString(String s) {
         //Lägg till sanity check

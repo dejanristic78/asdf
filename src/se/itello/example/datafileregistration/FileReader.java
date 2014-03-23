@@ -16,7 +16,6 @@ public class FileReader {
         try(BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String line = null;
             while( ( line = reader.readLine() ) != null ) {
-                System.out.println(line);
                 result.add(line);
             }
         } catch(IOException e) {

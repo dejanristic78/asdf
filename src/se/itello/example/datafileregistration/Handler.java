@@ -13,25 +13,25 @@ public abstract class Handler {
             this.beginIndex = startPosition-1;
             this.endIndex = endPosition;
         }
-        public String getData(String line) {
+        public String getDataFrom(String line) {
             return line.substring(beginIndex, endIndex);
         }
     }
     protected static final Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
     protected static Charset charset;
     
-    protected List<String> lines;
     
     protected Handler() {
         charset = DEFAULT_CHARSET;
     }
     public void dispatchFileData(Path path) {
-        lines = FileReader.textFileToList(path, charset);
-        parseLines();
+        parseLines( readFile(path) );
         registerData();
     }
-    protected void parseLines() {
+    protected List<String> readFile(Path path) {
+        return FileReader.textFileToList(path, charset);
     }
-    public void registerData() {
-    }
+    abstract protected void parseLines(List<String> lines);
+    
+    abstract protected void registerData();
 }
