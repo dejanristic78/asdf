@@ -9,19 +9,6 @@ import se.itello.example.payments.PaymentReceiver;
 
 
 public class BetalningsserviceHandler extends PaymentHandler{
-    
-    class DataPostSection {
-        final int beginIndex;
-        final int endIndex;
-        public DataPostSection(int startPosition, int endPosition) {
-            this.beginIndex = startPosition-1;
-            this.endIndex = endPosition;
-        }
-        public String getData(String line) {
-            return line.substring(beginIndex, endIndex);
-        }
-    }
-    
     private final static String OPENING_POST = "O";
     private final static String PAYMENT_POST = "B";
     
@@ -45,19 +32,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
     }
     
     @Override
-    public void dispatchFileData(Path path) {
-        lines = FileReader.textFileToList(path, charset);
-        parseLines();
-        registerData();
-    }
-    public void registerData() {
-        paymentReceiver.startPaymentBundle(accountNumber, paymentDate, currency);
-        for(PaymentPost p : paymentPosts) {
-            paymentReceiver.payment(p.amount, p.reference);
-        }
-        paymentReceiver.endPaymentBundle();
-    }
-    private void parseLines() {
+    protected void parseLines() {
         for(String line : lines) {
             String postType = postTypeSection.getData(line);
             
@@ -65,9 +40,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
                 case PAYMENT_POST:
                     String amountStr = amountSection.getData(line);
                     BigDecimal amount = getBigDecimalFromString(amountStr);
-                    System.out.println(amount);
                     String reference = referenceSection.getData(line);
-                    System.out.println(reference);
                     paymentPosts.add( new PaymentPost(amount, reference) );
                     break;
 
