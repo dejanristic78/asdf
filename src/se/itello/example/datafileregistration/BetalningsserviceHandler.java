@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 
-public class BetalningsserviceHandler extends PaymentHandler{
+final class BetalningsserviceHandler extends PaymentHandler{
     private final static String OPENING_POST = "O";
     private final static String PAYMENT_POST = "B";
     
@@ -29,23 +29,23 @@ public class BetalningsserviceHandler extends PaymentHandler{
     }
     
     @Override
-    protected void parseLines(List<String> lines) {
-        for(String line : lines) {
-            String postType = postTypeSection.getDataFrom(line);
+    protected void parseLines(List<String> dataPosts) {
+        for(String post : dataPosts) {
+            String postType = postTypeSection.getDataFrom(post);
             
             switch(postType) {
                 case PAYMENT_POST:
-                    String amountStr = amountSection.getDataFrom(line);
+                    String amountStr = amountSection.getDataFrom(post);
                     BigDecimal amount = getBigDecimalFromString(amountStr);
-                    String reference = referenceSection.getDataFrom(line);
+                    String reference = referenceSection.getDataFrom(post);
                     payments.add( new PaymentData(amount, reference) );
                     break;
 
                 case OPENING_POST:
-                    accountNumber = accountNumberSection.getDataFrom(line);
-                    String dateStr = paymentDateSection.getDataFrom(line);
+                    accountNumber = accountNumberSection.getDataFrom(post);
+                    String dateStr = paymentDateSection.getDataFrom(post);
                     paymentDate = getDateFromString(dateStr);
-                    currency = currencySection.getDataFrom(line);
+                    currency = currencySection.getDataFrom(post);
                     break;
             }
         }

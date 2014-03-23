@@ -10,7 +10,7 @@ import se.itello.example.payments.PaymentReceiver;
 import se.itello.example.payments.PaymentReceiverDummy;
 
 
-public abstract class PaymentHandler extends Handler{
+abstract class PaymentHandler extends Handler{
     protected class PaymentData {
         private final BigDecimal amount;
         private final String reference;

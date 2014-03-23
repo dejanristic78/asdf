@@ -18,7 +18,7 @@ public class PaymentReceiverDummy implements PaymentReceiver{
     @Override
     public void startPaymentBundle(String accountNumber, Date paymentDate, String currency) {
         System.out.println(
-                name+" startPaymentBundle() accountNumber: " + accountNumber + 
+                name+".startPaymentBundle() accountNumber: " + accountNumber + 
                 " paymentDate: " + paymentDate + 
                 " currency: " + currency
         );
@@ -27,14 +27,14 @@ public class PaymentReceiverDummy implements PaymentReceiver{
     @Override
     public void payment(BigDecimal amount, String reference) {
         System.out.println(
-                name+" payment() amount: " + amount + 
+                name+".payment() amount: " + amount + 
                 " reference: " + reference 
         );
     }
 
     @Override
     public void endPaymentBundle() {
-        System.out.println(name+" endPaymentBundle()" );
+        System.out.println(name+".endPaymentBundle()" );
     }
     
 }

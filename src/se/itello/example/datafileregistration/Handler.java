@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 
-public abstract class Handler {
+abstract class Handler {
     protected class DataPostSection {
         private final int beginIndex;
         private final int endIndex;
@@ -31,6 +31,7 @@ public abstract class Handler {
     protected List<String> readFile(Path path) {
         return FileReader.textFileToList(path, charset);
     }
+    
     abstract protected void parseLines(List<String> lines);
     
     abstract protected void registerData();

@@ -10,8 +10,10 @@ import java.util.List;
 
 
 public class FileReader {
+    private FileReader(){
+    }
     
-    public static List<String> textFileToList(Path path, Charset charset) {
+    static List<String> textFileToList(Path path, Charset charset) {
         List<String> result = new ArrayList();
         try(BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String line = null;
