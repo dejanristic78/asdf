@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Dejan
  */
-public class PaymentReceiverImpl implements PaymentReceiver{
+public class PaymentReceiverDummy implements PaymentReceiver{
     String name = this.getClass().getSimpleName();
     @Override
     public void startPaymentBundle(String accountNumber, Date paymentDate, String currency) {

@@ -16,6 +16,6 @@ public abstract class Handler {
     }
     
     
-    public void processAndRegisterFileData(Path path) {
+    public void dispatchFileData(Path path) {
     }
 }

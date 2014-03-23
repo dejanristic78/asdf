@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import se.itello.example.payments.PaymentReceiver;
+import se.itello.example.payments.PaymentReceiverDummy;
 
 
 public abstract class PaymentHandler extends Handler{
@@ -25,8 +26,8 @@ public abstract class PaymentHandler extends Handler{
     protected PaymentReceiver paymentReceiver;
     
     
-    public PaymentHandler(PaymentReceiver paymentReceiver) {
-        this.paymentReceiver = paymentReceiver;
+    public PaymentHandler() {
+        this.paymentReceiver = new PaymentReceiverDummy();
         paymentPosts = new ArrayList<>();
     }
     

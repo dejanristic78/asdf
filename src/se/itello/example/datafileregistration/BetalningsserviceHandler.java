@@ -33,8 +33,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
     private final DataPostSection referenceSection;
     
     
-    public BetalningsserviceHandler(PaymentReceiver paymentReceiver) {
-        super(paymentReceiver);
+    public BetalningsserviceHandler() {
         
         postTypeSection         = new DataPostSection(1, 1);
         accountNumberSection    = new DataPostSection(2, 16);
@@ -46,7 +45,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
     }
     
     @Override
-    public void processAndRegisterFileData(Path path) {
+    public void dispatchFileData(Path path) {
         lines = FileReader.textFileToList(path, charset);
         parseLines();
         registerData();

@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import se.itello.example.payments.PaymentReceiver;
-import se.itello.example.payments.PaymentReceiverImpl;
+import se.itello.example.payments.PaymentReceiverDummy;
 
 /**
  *
@@ -28,10 +28,8 @@ public class Startup {
         Path path = Paths.get("src/Exempelfil_betalningsservice.txt");
         System.out.println(path.toRealPath(LinkOption.NOFOLLOW_LINKS));
         
-        PaymentReceiver dummyPR = new PaymentReceiverImpl();
-        
-        DataFileRegistrator fr = new DataFileRegistrator(dummyPR);
-        fr.register(path);
+        DataFileRegistrator dfr = new DataFileRegistrator();
+        dfr.register(path);
     }
     
 }

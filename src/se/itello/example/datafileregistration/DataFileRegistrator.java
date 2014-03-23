@@ -8,36 +8,29 @@ public class DataFileRegistrator {
     private static final String INBETALNINGSTJANSTEN = "_inbetalningstjansten.txt";
     private static final String BETALNINGSSERVICE = "_betalningsservice.txt";
     
-    private final PaymentReceiver paymentReceiver;
-    //...
-    //...
     private Handler handler;
 
                                                         //...
-    public DataFileRegistrator(PaymentReceiver paymentReceiver) {
-        this.paymentReceiver = paymentReceiver;
-    }
      
     public void register(Path path) {
         String ext = getExtension(path);
         switch(ext) {
             case INBETALNINGSTJANSTEN:
-                //fileHandler = new InbetalingstjanstenFileHandler(path);
+                //handler = new InbetalingstjanstenFileHandler(path);
                 break;
             case BETALNINGSSERVICE:
-                handler = new BetalningsserviceHandler(paymentReceiver);
-                handler.processAndRegisterFileData(path);
-                
+                handler = new BetalningsserviceHandler();
                 break;
         }
+        handler.dispatchFileData(path);
         
     }
     
     private String getExtension(Path path) {
+        //Sanity check
         String fileName = path.getFileName().toString();
-        int iA = fileName.lastIndexOf("_");
-        int iB = fileName.length();
-        return fileName.substring(iA, iB);
+        int extIndex = fileName.lastIndexOf("_");
+        return fileName.substring(extIndex);
     }
     
 }
