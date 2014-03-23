@@ -16,20 +16,18 @@ final class BetalningsserviceHandler extends PaymentHandler{
     private final DataPostSection amountSection;
     private final DataPostSection referenceSection;
     
-    
-    BetalningsserviceHandler() {
-        
+
+    public BetalningsserviceHandler() {
         postTypeSection         = new DataPostSection(1, 1);
         accountNumberSection    = new DataPostSection(2, 16);
         paymentDateSection      = new DataPostSection(41, 48);
         currencySection         = new DataPostSection(49, 51);
         amountSection           = new DataPostSection(2, 15);
         referenceSection        = new DataPostSection(16, 50);
-        
     }
     
     @Override
-    protected void parseLines(List<String> dataPosts) {
+    protected void parse(List<String> dataPosts) {
         for(String post : dataPosts) {
             String postType = postTypeSection.getDataFrom(post);
             
