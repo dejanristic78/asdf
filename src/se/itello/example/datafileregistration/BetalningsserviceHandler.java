@@ -1,11 +1,7 @@
 package se.itello.example.datafileregistration;
 
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.sql.Date;
-import java.util.List;
-import se.itello.example.payments.PaymentReceiver;
 
 
 public class BetalningsserviceHandler extends PaymentHandler{
@@ -41,7 +37,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
                     String amountStr = amountSection.getData(line);
                     BigDecimal amount = getBigDecimalFromString(amountStr);
                     String reference = referenceSection.getData(line);
-                    paymentPosts.add( new PaymentPost(amount, reference) );
+                    payments.add( new PaymentData(amount, reference) );
                     break;
 
                 case OPENING_POST:
