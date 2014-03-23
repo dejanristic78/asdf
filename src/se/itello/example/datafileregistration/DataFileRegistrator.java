@@ -10,13 +10,12 @@ public class DataFileRegistrator {
     
     private Handler handler;
 
-                                                        //...
      
     public void register(Path path) {
         String ext = getExtension(path);
         switch(ext) {
             case INBETALNINGSTJANSTEN:
-                //handler = new InbetalingstjanstenFileHandler(path);
+                //handler = new InbetalingstjanstenHandler();
                 break;
             case BETALNINGSSERVICE:
                 handler = new BetalningsserviceHandler();

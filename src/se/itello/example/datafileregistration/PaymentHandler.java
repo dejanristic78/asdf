@@ -11,17 +11,6 @@ import se.itello.example.payments.PaymentReceiverDummy;
 
 
 public abstract class PaymentHandler extends Handler{
-    protected class DataPostSection {
-        private final int beginIndex;
-        private final int endIndex;
-        public DataPostSection(int startPosition, int endPosition) {
-            this.beginIndex = startPosition-1;
-            this.endIndex = endPosition;
-        }
-        public String getData(String line) {
-            return line.substring(beginIndex, endIndex);
-        }
-    }
     protected class PaymentPost {
         protected final BigDecimal amount;
         protected final String reference;
@@ -30,33 +19,20 @@ public abstract class PaymentHandler extends Handler{
             this.reference = reference;
         }
     }
-    protected static final Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
-    protected static Charset charset;
-    
     protected List<PaymentPost> paymentPosts;
     
     protected String accountNumber;
     protected Date paymentDate;
     protected String currency;
     
-    protected List<String> lines;
     protected PaymentReceiver paymentReceiver;
     
     
-    public PaymentHandler() {
-        charset = DEFAULT_CHARSET;
+    protected PaymentHandler() {
         this.paymentReceiver = new PaymentReceiverDummy();
         paymentPosts = new ArrayList<>();
     }
     @Override
-    public void dispatchFileData(Path path) {
-        lines = FileReader.textFileToList(path, charset);
-        parseLines();
-        registerData();
-    }
-    protected void parseLines() {
-    }
-    
     public void registerData() {
         paymentReceiver.startPaymentBundle(accountNumber, paymentDate, currency);
         for(PaymentPost p : paymentPosts) {

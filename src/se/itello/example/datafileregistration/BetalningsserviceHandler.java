@@ -20,7 +20,7 @@ public class BetalningsserviceHandler extends PaymentHandler{
     private final DataPostSection referenceSection;
     
     
-    public BetalningsserviceHandler() {
+    BetalningsserviceHandler() {
         
         postTypeSection         = new DataPostSection(1, 1);
         accountNumberSection    = new DataPostSection(2, 16);

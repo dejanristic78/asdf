@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import se.itello.example.datafileregistration.BetalningsserviceHandler;
+import se.itello.example.datafileregistration.Handler;
 
 import se.itello.example.payments.PaymentReceiver;
 import se.itello.example.payments.PaymentReceiverDummy;
@@ -30,6 +32,7 @@ public class Startup {
         
         DataFileRegistrator dfr = new DataFileRegistrator();
         dfr.register(path);
+        
     }
     
 }
