@@ -38,14 +38,15 @@ final class BetalningsserviceHandler extends PaymentHandler{
                     String amountStr = amountSection.getDataFrom(post);
                     BigDecimal amount = getBigDecimalFromString(amountStr);
                     String reference = referenceSection.getDataFrom(post);
-                    payments.add( new PaymentData(amount, reference) );
+                    addPayment(amount, reference);
                     break;
 
                 case OPENING_POST:
-                    accountNumber = accountNumberSection.getDataFrom(post);
+                    String accountNumber = accountNumberSection.getDataFrom(post);
                     String dateStr = paymentDateSection.getDataFrom(post);
-                    paymentDate = getDateFromString(dateStr);
-                    currency = currencySection.getDataFrom(post);
+                    Date paymentDate = getDateFromString(dateStr);
+                    String currency = currencySection.getDataFrom(post);
+                    setPaymentInfo(accountNumber, paymentDate, currency);
                     break;
             }
         }
@@ -55,7 +56,6 @@ final class BetalningsserviceHandler extends PaymentHandler{
         return new BigDecimal(formattedValue);
     }
     private Date getDateFromString(String s) {
-        //Lägg till sanity check
         String jdbcFormat = 
                 s.substring(0, 4) + "-" + 
                 s.substring(4, 6) + "-" + 
