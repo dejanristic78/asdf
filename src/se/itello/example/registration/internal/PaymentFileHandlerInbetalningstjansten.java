@@ -1,7 +1,7 @@
 package se.itello.example.registration.internal;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public final class PaymentFileHandlerInbetalningstjansten extends PaymentFileHandler{

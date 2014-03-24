@@ -1,14 +1,16 @@
 package se.itello.example.registration.internal;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import se.itello.example.payments.PaymentReceiver;
 import se.itello.example.payments.PaymentReceiverDummy;
 
 
+//Superklass till handlers av inbetalningsfiler
 public abstract class PaymentFileHandler extends FileHandler{
+    
     private class Payment {
         private final BigDecimal amount;
         private final String reference;

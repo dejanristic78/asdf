@@ -4,28 +4,28 @@
  * and open the template in the editor.
  */
 
-package se.itello.example.registration.exceptions;
+package se.itello.example.registration;
 
 /**
  *
  * @author Dejan
  */
-public class FileIncorrectFormatException extends Exception {
+public class FileFormatNotSupportedException extends Exception {
 
     /**
-     * Creates a new instance of <code>FileIncorrectFormatException</code>
+     * Creates a new instance of <code>FileTypeNotSupportedException</code>
      * without detail message.
      */
-    public FileIncorrectFormatException() {
+    public FileFormatNotSupportedException() {
     }
 
     /**
-     * Constructs an instance of <code>FileIncorrectFormatException</code> with
+     * Constructs an instance of <code>FileTypeNotSupportedException</code> with
      * the specified detail message.
      *
      * @param msg the detail message.
      */
-    public FileIncorrectFormatException(String msg) {
+    public FileFormatNotSupportedException(String msg) {
         super(msg);
     }
 }

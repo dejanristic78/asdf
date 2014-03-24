@@ -8,11 +8,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//Superklass till handlers av div. filtyper
 public abstract class FileHandler {
+    
+    //Hjälpklass som används för att skilja ut data ur textrad.
     protected class DataRowSection {
         private final int beginIndex;
         private final int endIndex;
+        
+        //Definerar en datapost i textrad med samma start och slutposition
+        //som anges i beskrivning av filformat.
         public DataRowSection(int startPosition, int endPosition) {
             this.beginIndex = startPosition-1;
             this.endIndex = endPosition;
@@ -52,8 +57,10 @@ public abstract class FileHandler {
         return result;
     }
     
-    abstract protected void parse(List<String> dataRows);
+    //Avsedd att implementeras av subklass. Skall hämta relevant data ur textrader.
+    abstract protected void parse(List<String> dataRows) ;
     
+    //Avsedd att implementeras av subklass. Skall skicka data till lämplig receiver.
     abstract protected void registerData();
     
     

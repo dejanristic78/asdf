@@ -1,11 +1,14 @@
 package se.itello.example.registration.internal;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
 public final class PaymentFileHandlerBetalningsservice extends PaymentFileHandler{
+    private final static String DATE_FORMAT = "yyyyMMdd";
     private final static String OPENING_POST = "O";
     private final static String PAYMENT_POST = "B";
     
@@ -54,12 +57,14 @@ public final class PaymentFileHandlerBetalningsservice extends PaymentFileHandle
         return new BigDecimal(formatted);
     }
     private Date getDateFromString(String s) {
-        String formatted = 
-                s.substring(0, 4) + "-" + 
-                s.substring(4, 6) + "-" + 
-                s.substring(6);
-        
-        return Date.valueOf(formatted);
+        Date result = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            result = dateFormat.parse(s);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
         
     

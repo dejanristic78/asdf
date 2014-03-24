@@ -7,9 +7,11 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import se.itello.example.registration.exceptions.FileTypeNotSupportedException;
 
+//API:ets publika interface
 public class DataFileRegistrator {
+    
+    //Definerar vilka format som stödjs
     private enum FileFormat{
         BETALNINGSSERVICE("Betalningsservice"),
         INBETALNINGSTJANSTEN("Inbetalningstjänsten");
@@ -36,20 +38,20 @@ public class DataFileRegistrator {
         formatToHandler.put(FileFormat.BETALNINGSSERVICE,       new PaymentFileHandlerBetalningsservice());
         formatToHandler.put(FileFormat.INBETALNINGSTJANSTEN,    new PaymentFileHandlerInbetalningstjansten());
     }
-    public void register(Path dataFilePath) throws FileTypeNotSupportedException{
+    public void register(Path dataFilePath) throws FileFormatNotSupportedException {
         FileFormat format = findFormat(dataFilePath);
                     
         if(formatToHandler.containsKey(format)) {
             formatToHandler.get(format).dispatchFileData(dataFilePath);
         }
         else {
-            throw new FileTypeNotSupportedException("File format can not be registred. "
+            throw new FileFormatNotSupportedException("File format can not be registred. "
                     + "Supported file formats are : " +
                     formatToHandler.keySet()
             );
         }
     }
-    public void registerAll(Set<Path> dataFilePaths) throws FileTypeNotSupportedException{
+    public void registerAll(Set<Path> dataFilePaths) throws FileFormatNotSupportedException{
         for(Path p : dataFilePaths) {
             register(p);
         }
