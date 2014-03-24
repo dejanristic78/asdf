@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package se.itello.example.datafileregistration.exceptions;
+package se.itello.example.registration.exceptions;
 
 /**
  *

@@ -1,4 +1,4 @@
-package se.itello.example.datafileregistration;
+package se.itello.example.registration.internal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-abstract class Handler {
+public abstract class FileHandler {
     protected class DataPostSection {
         private final int beginIndex;
         private final int endIndex;
@@ -25,7 +25,7 @@ abstract class Handler {
     private Charset charset;
     
     
-    public Handler() {
+    public FileHandler() {
         charset = DEFAULT_CHARSET;
     }
     

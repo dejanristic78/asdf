@@ -1,10 +1,10 @@
-package se.itello.example.datafileregistration;
+package se.itello.example.registration.internal;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-final class InbetalningstjanstenHandler extends PaymentHandler{
+public final class InbetalningstjanstenPaymentFileHandler extends PaymentFileHandler{
     private final static String OPENING_POST    = "00";
     private final static String PAYMENT_POST    = "30";
     private final static String ENDING_POST     = "99";
@@ -17,7 +17,7 @@ final class InbetalningstjanstenHandler extends PaymentHandler{
     private final DataPostSection amountSection;
     private final DataPostSection referenceSection;
     
-    public InbetalningstjanstenHandler() {
+    public InbetalningstjanstenPaymentFileHandler() {
         postTypeSection         = new DataPostSection(1, 2);
         accountNumberSection    = new DataPostSection(15, 24);
         amountSection           = new DataPostSection(3, 22);

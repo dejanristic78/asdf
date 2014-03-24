@@ -1,4 +1,4 @@
-package se.itello.example.datafileregistration;
+package se.itello.example.registration.internal;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -8,7 +8,7 @@ import se.itello.example.payments.PaymentReceiver;
 import se.itello.example.payments.PaymentReceiverDummy;
 
 
-abstract class PaymentHandler extends Handler{
+public abstract class PaymentFileHandler extends FileHandler{
     private class PaymentData {
         private final BigDecimal amount;
         private final String reference;
@@ -17,16 +17,16 @@ abstract class PaymentHandler extends Handler{
             this.reference = reference;
         }
     }
-    private List<PaymentData> payments;
+    private final List<PaymentData> payments;
     
     private String accountNumber;
     private Date paymentDate;
     private String currency;
     
-    private PaymentReceiver paymentReceiver;
+    private final PaymentReceiver paymentReceiver;
     
     
-    protected PaymentHandler() {
+    protected PaymentFileHandler() {
         this.paymentReceiver = new PaymentReceiverDummy();
         payments = new ArrayList<>();
     }
