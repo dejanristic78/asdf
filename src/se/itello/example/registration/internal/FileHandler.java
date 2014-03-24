@@ -10,15 +10,15 @@ import java.util.List;
 
 
 public abstract class FileHandler {
-    protected class DataPostSection {
+    protected class DataRowSection {
         private final int beginIndex;
         private final int endIndex;
-        public DataPostSection(int startPosition, int endPosition) {
+        public DataRowSection(int startPosition, int endPosition) {
             this.beginIndex = startPosition-1;
             this.endIndex = endPosition;
         }
-        public String getDataFrom(String post) {
-            return post.substring(beginIndex, endIndex);
+        public String getSectionFrom(String dataRow) {
+            return dataRow.substring(beginIndex, endIndex);
         }
     }
     private static final Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
@@ -34,8 +34,8 @@ public abstract class FileHandler {
     }
     
     public void dispatchFileData(Path path) {
-        List<String> dataPosts = readFile(path);
-        parse(dataPosts);
+        List<String> dataRows = readFile(path);
+        parse(dataRows);
         registerData();
     }
     
@@ -52,7 +52,7 @@ public abstract class FileHandler {
         return result;
     }
     
-    abstract protected void parse(List<String> lines);
+    abstract protected void parse(List<String> dataRows);
     
     abstract protected void registerData();
     

@@ -12,32 +12,32 @@ public final class PaymentFileHandlerInbetalningstjansten extends PaymentFileHan
     private final static Date paymentDate = null;     //Filformatet saknar denna information.
     private final static String currency = "SEK";     //Enligt beskrivning av filformatet.
     
-    private final DataPostSection postTypeSection;
-    private final DataPostSection accountNumberSection;
-    private final DataPostSection amountSection;
-    private final DataPostSection referenceSection;
+    private final DataRowSection postTypeSection;
+    private final DataRowSection accountNumberSection;
+    private final DataRowSection amountSection;
+    private final DataRowSection referenceSection;
     
     public PaymentFileHandlerInbetalningstjansten() {
-        postTypeSection         = new DataPostSection(1, 2);
-        accountNumberSection    = new DataPostSection(15, 24);
-        amountSection           = new DataPostSection(3, 22);
-        referenceSection        = new DataPostSection(41, 65);
+        postTypeSection         = new DataRowSection(1, 2);
+        accountNumberSection    = new DataRowSection(15, 24);
+        amountSection           = new DataRowSection(3, 22);
+        referenceSection        = new DataRowSection(41, 65);
     }
     
     @Override
-    protected void parse(List<String> dataPosts) {
-        for(String post : dataPosts) {
-            String postType = postTypeSection.getDataFrom(post);
+    protected void parse(List<String> dataRows) {
+        for(String dataRow : dataRows) {
+            String postType = postTypeSection.getSectionFrom(dataRow);
             
             switch(postType) {
                 case PAYMENT_POST:
-                    String amountStr = amountSection.getDataFrom(post);
+                    String amountStr = amountSection.getSectionFrom(dataRow);
                     BigDecimal amount = getBigDecimalFrom(amountStr);
-                    String reference = referenceSection.getDataFrom(post);
+                    String reference = referenceSection.getSectionFrom(dataRow);
                     addPayment(amount, reference);
                     break;
                 case OPENING_POST:
-                    String accountNumber = accountNumberSection.getDataFrom(post);
+                    String accountNumber = accountNumberSection.getSectionFrom(dataRow);
                     setPaymentInfo(accountNumber, paymentDate, currency);
                     break;
                 //case ENDING_POST:

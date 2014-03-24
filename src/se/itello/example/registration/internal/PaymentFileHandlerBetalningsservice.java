@@ -9,41 +9,41 @@ public final class PaymentFileHandlerBetalningsservice extends PaymentFileHandle
     private final static String OPENING_POST = "O";
     private final static String PAYMENT_POST = "B";
     
-    private final DataPostSection postTypeSection;
-    private final DataPostSection accountNumberSection;
-    private final DataPostSection paymentDateSection;
-    private final DataPostSection currencySection;
-    private final DataPostSection amountSection;
-    private final DataPostSection referenceSection;
+    private final DataRowSection postTypeSection;
+    private final DataRowSection accountNumberSection;
+    private final DataRowSection paymentDateSection;
+    private final DataRowSection currencySection;
+    private final DataRowSection amountSection;
+    private final DataRowSection referenceSection;
     
 
     public PaymentFileHandlerBetalningsservice() {
-        postTypeSection         = new DataPostSection(1, 1);
-        accountNumberSection    = new DataPostSection(2, 16);
-        paymentDateSection      = new DataPostSection(41, 48);
-        currencySection         = new DataPostSection(49, 51);
-        amountSection           = new DataPostSection(2, 15);
-        referenceSection        = new DataPostSection(16, 50);
+        postTypeSection         = new DataRowSection(1, 1);
+        accountNumberSection    = new DataRowSection(2, 16);
+        paymentDateSection      = new DataRowSection(41, 48);
+        currencySection         = new DataRowSection(49, 51);
+        amountSection           = new DataRowSection(2, 15);
+        referenceSection        = new DataRowSection(16, 50);
     }
     
     @Override
-    protected void parse(List<String> dataPosts) {
-        for(String post : dataPosts) {
-            String postType = postTypeSection.getDataFrom(post);
+    protected void parse(List<String> dataRows) {
+        for(String dataRow : dataRows) {
+            String postType = postTypeSection.getSectionFrom(dataRow);
             
             switch(postType) {
                 case PAYMENT_POST:
-                    String amountStr = amountSection.getDataFrom(post);
+                    String amountStr = amountSection.getSectionFrom(dataRow);
                     BigDecimal amount = getBigDecimalFrom(amountStr);
-                    String reference = referenceSection.getDataFrom(post);
+                    String reference = referenceSection.getSectionFrom(dataRow);
                     addPayment(amount, reference);
                     break;
 
                 case OPENING_POST:
-                    String accountNumber = accountNumberSection.getDataFrom(post);
-                    String dateStr = paymentDateSection.getDataFrom(post);
+                    String accountNumber = accountNumberSection.getSectionFrom(dataRow);
+                    String dateStr = paymentDateSection.getSectionFrom(dataRow);
                     Date paymentDate = getDateFromString(dateStr);
-                    String currency = currencySection.getDataFrom(post);
+                    String currency = currencySection.getSectionFrom(dataRow);
                     setPaymentInfo(accountNumber, paymentDate, currency);
                     break;
             }
