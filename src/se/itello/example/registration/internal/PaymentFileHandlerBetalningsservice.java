@@ -54,12 +54,12 @@ public final class PaymentFileHandlerBetalningsservice extends PaymentFileHandle
         return new BigDecimal(formatted);
     }
     private Date getDateFromString(String s) {
-        String jdbcFormat = 
+        String formatted = 
                 s.substring(0, 4) + "-" + 
                 s.substring(4, 6) + "-" + 
                 s.substring(6);
         
-        return Date.valueOf(jdbcFormat);
+        return Date.valueOf(formatted);
     }
         
     
