@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 
-public final class BetalningsservicePaymentFileHandler extends PaymentFileHandler{
+public final class PaymentFileHandlerBetalningsservice extends PaymentFileHandler{
     private final static String OPENING_POST = "O";
     private final static String PAYMENT_POST = "B";
     
@@ -17,7 +17,7 @@ public final class BetalningsservicePaymentFileHandler extends PaymentFileHandle
     private final DataPostSection referenceSection;
     
 
-    public BetalningsservicePaymentFileHandler() {
+    public PaymentFileHandlerBetalningsservice() {
         postTypeSection         = new DataPostSection(1, 1);
         accountNumberSection    = new DataPostSection(2, 16);
         paymentDateSection      = new DataPostSection(41, 48);
@@ -34,7 +34,7 @@ public final class BetalningsservicePaymentFileHandler extends PaymentFileHandle
             switch(postType) {
                 case PAYMENT_POST:
                     String amountStr = amountSection.getDataFrom(post);
-                    BigDecimal amount = getBigDecimalFromString(amountStr);
+                    BigDecimal amount = getBigDecimalFrom(amountStr);
                     String reference = referenceSection.getDataFrom(post);
                     addPayment(amount, reference);
                     break;
@@ -49,9 +49,9 @@ public final class BetalningsservicePaymentFileHandler extends PaymentFileHandle
             }
         }
     }
-    private BigDecimal getBigDecimalFromString(String s) {
-        String formattedValue = s.replace(" ", "").replace(",", ".");
-        return new BigDecimal(formattedValue);
+    private BigDecimal getBigDecimalFrom(String s) {
+        String formatted = s.replace(" ", "").replace(",", ".");
+        return new BigDecimal(formatted);
     }
     private Date getDateFromString(String s) {
         String jdbcFormat = 

@@ -1,15 +1,15 @@
 package se.itello.example.registration;
 
 import se.itello.example.registration.internal.FileHandler;
-import se.itello.example.registration.internal.InbetalningstjanstenPaymentFileHandler;
-import se.itello.example.registration.internal.BetalningsservicePaymentFileHandler;
+import se.itello.example.registration.internal.PaymentFileHandlerInbetalningstjansten;
+import se.itello.example.registration.internal.PaymentFileHandlerBetalningsservice;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import se.itello.example.registration.exceptions.FileTypeNotSupportedException;
 
-
-public class Registrator {
+public class DataFileRegistrator {
     private enum FileFormat{
         BETALNINGSSERVICE("Betalningsservice"),
         INBETALNINGSTJANSTEN("Inbetalningstjänsten");
@@ -27,26 +27,31 @@ public class Registrator {
     private final Map<String, FileFormat> extensionToFormat;
     private final Map<FileFormat, FileHandler> formatToHandler;
     
-    public Registrator() {
+    public DataFileRegistrator() {
         extensionToFormat = new HashMap<>();
-        extensionToFormat.put("_betalningsservice.txt",                 FileFormat.BETALNINGSSERVICE);
-        extensionToFormat.put("_inbetalningstjansten.txt",              FileFormat.INBETALNINGSTJANSTEN);
+        extensionToFormat.put("_betalningsservice.txt",         FileFormat.BETALNINGSSERVICE);
+        extensionToFormat.put("_inbetalningstjansten.txt",      FileFormat.INBETALNINGSTJANSTEN);
         
         formatToHandler = new HashMap<>();
-        formatToHandler.put(FileFormat.BETALNINGSSERVICE,          new BetalningsservicePaymentFileHandler());
-        formatToHandler.put(FileFormat.INBETALNINGSTJANSTEN,       new InbetalningstjanstenPaymentFileHandler());
+        formatToHandler.put(FileFormat.BETALNINGSSERVICE,       new PaymentFileHandlerBetalningsservice());
+        formatToHandler.put(FileFormat.INBETALNINGSTJANSTEN,    new PaymentFileHandlerInbetalningstjansten());
     }
-    public void registerDataFile(Path path) throws FileTypeNotSupportedException{
-        FileFormat format = findFormat(path);
+    public void register(Path dataFilePath) throws FileTypeNotSupportedException{
+        FileFormat format = findFormat(dataFilePath);
                     
         if(formatToHandler.containsKey(format)) {
-            formatToHandler.get(format).dispatchFileData(path);
+            formatToHandler.get(format).dispatchFileData(dataFilePath);
         }
         else {
-            throw new FileTypeNotSupportedException("File format [" + format + 
-                    "] is not supported. Supported file formats are : " +
+            throw new FileTypeNotSupportedException("File format can not be registred. "
+                    + "Supported file formats are : " +
                     formatToHandler.keySet()
             );
+        }
+    }
+    public void registerAll(Set<Path> dataFilePaths) throws FileTypeNotSupportedException{
+        for(Path p : dataFilePaths) {
+            register(p);
         }
     }
     private FileFormat findFormat(Path path) {

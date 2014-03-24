@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-public final class InbetalningstjanstenPaymentFileHandler extends PaymentFileHandler{
+public final class PaymentFileHandlerInbetalningstjansten extends PaymentFileHandler{
     private final static String OPENING_POST    = "00";
     private final static String PAYMENT_POST    = "30";
-    private final static String ENDING_POST     = "99";
+    //private final static String ENDING_POST     = "99";
     
     private final static Date paymentDate = null;     //Filformatet saknar denna information.
     private final static String currency = "SEK";     //Enligt beskrivning av filformatet.
@@ -17,7 +17,7 @@ public final class InbetalningstjanstenPaymentFileHandler extends PaymentFileHan
     private final DataPostSection amountSection;
     private final DataPostSection referenceSection;
     
-    public InbetalningstjanstenPaymentFileHandler() {
+    public PaymentFileHandlerInbetalningstjansten() {
         postTypeSection         = new DataPostSection(1, 2);
         accountNumberSection    = new DataPostSection(15, 24);
         amountSection           = new DataPostSection(3, 22);
@@ -32,7 +32,7 @@ public final class InbetalningstjanstenPaymentFileHandler extends PaymentFileHan
             switch(postType) {
                 case PAYMENT_POST:
                     String amountStr = amountSection.getDataFrom(post);
-                    BigDecimal amount = getBigDecimalFromString(amountStr);
+                    BigDecimal amount = getBigDecimalFrom(amountStr);
                     String reference = referenceSection.getDataFrom(post);
                     addPayment(amount, reference);
                     break;
@@ -46,9 +46,9 @@ public final class InbetalningstjanstenPaymentFileHandler extends PaymentFileHan
             }
         }
     }
-    private BigDecimal getBigDecimalFromString(String s) {
-        int decimalI = s.length()-2;
-        String formatted = s.substring(0, decimalI) + "." + s.substring(decimalI);
+    private BigDecimal getBigDecimalFrom(String s) {
+        int decimalIndex = s.length()-2;
+        String formatted = s.substring(0, decimalIndex) + "." + s.substring(decimalIndex);
         return new BigDecimal(formatted);
     }
     

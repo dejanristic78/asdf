@@ -1,10 +1,12 @@
 package se.itello.example.startup;
 
-import se.itello.example.registration.Registrator;
+import se.itello.example.registration.DataFileRegistrator;
 import java.io.IOException;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,30 +16,25 @@ import java.nio.file.Paths;
 public class Startup {
 
     public static void main(String[] args) throws IOException {
-        Registrator dfr = new Registrator();
+        DataFileRegistrator dfr = new DataFileRegistrator();
         
-        Path path1 = Paths.get("resources/Exempelfil_betalningsservice.txt");
-        Path path2 = Paths.get("resources/Exempelfil_inbetalningstjansten.txt");
-        Path path3 = Paths.get("resources/Exempelfil_felfiltyp.txt");
+        List<Path> toRegister = new ArrayList();
         
-        try{
-            System.out.println("\nStartup registers "+path1.toRealPath(LinkOption.NOFOLLOW_LINKS));
-            dfr.registerDataFile(path1);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+        toRegister.add( Paths.get("resources/Exempelfil_betalningsservice.txt") );
+        toRegister.add( Paths.get("resources/Exempelfil_inbetalningstjansten.txt") );
+        toRegister.add( Paths.get("resources/Exempelfil_felformat.txt") );
+        
+        
+        for (Path path : toRegister) {
+            try{
+                System.out.println("\nStartup.main() registers "+path.toRealPath(LinkOption.NOFOLLOW_LINKS));
+                dfr.register(path);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            
         }
-        try{
-            System.out.println("\nStartup registers "+path2.toRealPath(LinkOption.NOFOLLOW_LINKS));
-            dfr.registerDataFile(path2);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try{
-            System.out.println("\nStartup registers "+path3.toRealPath(LinkOption.NOFOLLOW_LINKS));
-            dfr.registerDataFile(path3);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        
     }
     
 }
