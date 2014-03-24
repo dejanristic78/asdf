@@ -9,15 +9,15 @@ import se.itello.example.payments.PaymentReceiverDummy;
 
 
 public abstract class PaymentFileHandler extends FileHandler{
-    private class PaymentData {
+    private class Payment {
         private final BigDecimal amount;
         private final String reference;
-        PaymentData(BigDecimal amount, String reference) {
+        Payment(BigDecimal amount, String reference) {
             this.amount = amount;
             this.reference = reference;
         }
     }
-    private final List<PaymentData> payments;
+    private final List<Payment> payments;
     
     private String accountNumber;
     private Date paymentDate;
@@ -36,13 +36,13 @@ public abstract class PaymentFileHandler extends FileHandler{
         this.currency = currency;
     }
     protected void addPayment(BigDecimal amount, String reference) {
-        payments.add( new PaymentData(amount, reference) );
+        payments.add( new Payment(amount, reference) );
     }
     @Override
     public void registerData() {
         paymentReceiver.startPaymentBundle(accountNumber, paymentDate, currency);
-        for(PaymentData pd : payments) {
-            paymentReceiver.payment(pd.amount, pd.reference);
+        for(Payment p : payments) {
+            paymentReceiver.payment(p.amount, p.reference);
         }
         paymentReceiver.endPaymentBundle();
     }
